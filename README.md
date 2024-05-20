@@ -23,7 +23,7 @@ Simple HTTP forwarder and monitor with web GUI.
 ## Usage
 
 ```bash
-docker run -d -p 8080:8080 -p 8081:8081 -e PROXY_DESTINATION=https://api.github.com --name httpymonitor-github-api kamarton/httpymonitor
+docker run -d -p 8080:8080 -p 8081:8081 -e PROXY_DESTINATION=https://api.github.com --name httpymonitor-github-api smartondev/httpymonitor
 ```
 
 This example:
