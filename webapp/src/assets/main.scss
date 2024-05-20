@@ -1,0 +1,23 @@
+@import "./fonts.scss";
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+body, html {
+  font-family: 'Roboto', sans-serif;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.fs-90 {
+  font-size: 90%;
+}
+
+.fs-80 {
+  font-size: 80%;
+}
