@@ -2,20 +2,11 @@ import asyncio
 
 import aiohttp
 from aiohttp import web
-from multidict import CIMultiDict, CIMultiDictProxy
+from multidict import CIMultiDict
 
 from environment import Environment
-from http_helper import parse_query_params, get_host_from_url
-from proxy_log import ProxyLog, ProxyLogPhase, HttpHeaders, ContentStorage
-
-
-def remove_not_forwardable_headers(headers: CIMultiDict | CIMultiDictProxy):
-    keys = ['content-encoding', 'content-length', 'transfer-encoding']
-    for key in keys:
-        try:
-            del headers[key]
-        except KeyError:
-            pass
+from http_helper import parse_query_params, get_host_from_url, http_remove_not_forwardable_headers
+from proxy_log import ProxyLog, ProxyLogPhase, HttpHeaders, ContentStorage, RequestEntry
 
 
 async def handle_proxy(request: aiohttp.web.Request):
@@ -27,7 +18,7 @@ async def handle_proxy(request: aiohttp.web.Request):
     if environment.PROXY_OVERRIDE_HOST_HEADER:
         forward_headers['host'] = host_from_destination
     request_headers = HttpHeaders.create_by(forward_headers)
-    remove_not_forwardable_headers(forward_headers)
+    http_remove_not_forwardable_headers(forward_headers)
     log = proxy_log.new_entry(
         method=request.method,
         url=str(request.url), headers=request_headers,
@@ -51,22 +42,26 @@ async def handle_proxy(request: aiohttp.web.Request):
         async with session.request(
                 request.method, destination_url, headers=forward_headers, data=data
         ) as response:
-            log = log.mutate(ProxyLogPhase.RESPONSE_BODY_READING)
-            forward_headers = CIMultiDict(response.headers)
-            remove_not_forwardable_headers(forward_headers)
-            response_headers = HttpHeaders.create_by(forward_headers)
-            log.with_response_headers(response_headers)
-            log.response_status = response.status
-            proxy_log.put(log)
-            body = await response.read()
-            log = log.mutate(ProxyLogPhase.RESPONSE_BODY_READ)
-            log.with_response_body(body, response_headers.content_type())
-            proxy_log.put(log)
-            return web.Response(
-                body=body,
-                status=response.status,
-                headers=forward_headers,
-            )
+            return await handel_proxy_response(response, log, proxy_log)
+
+
+async def handel_proxy_response(response: aiohttp.ClientResponse, log: RequestEntry, proxy_log: ProxyLog):
+    log = log.mutate(ProxyLogPhase.RESPONSE_BODY_READING)
+    forward_headers = CIMultiDict(response.headers)
+    response_headers = HttpHeaders.create_by(forward_headers)
+    http_remove_not_forwardable_headers(forward_headers)
+    log.with_response_headers(response_headers)
+    log.response_status = response.status
+    proxy_log.put(log)
+    body = await response.read()
+    log = log.mutate(ProxyLogPhase.RESPONSE_BODY_READ)
+    log.with_response_body(body, response_headers.content_type())
+    proxy_log.put(log)
+    return web.Response(
+        body=body,
+        status=response.status,
+        headers=forward_headers,
+    )
 
 
 async def storage_garbage_task(app):

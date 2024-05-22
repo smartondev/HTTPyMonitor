@@ -1,10 +1,12 @@
 import asyncio
+import json
 import random
 import string
 import time
 from multiprocessing import Process
 
 import aiohttp
+import brotli
 from aiohttp import web
 
 from environment import Environment
@@ -42,7 +44,15 @@ async def handle(request):
         status_code = random.randint(400, 420)
     elif status_code_rand == 2:
         status_code = random.randint(500, 520)
-    return web.json_response(response_data, status=status_code)
+    if random_boolean():
+        return web.json_response(response_data, status=status_code)
+    json_bytes = json.dumps(response_data).encode('utf-8')
+    json_bytes_brotli = brotli.compress(json_bytes)
+    print('brotli compressed response size:', len(json_bytes_brotli), 'bytes')
+    return web.Response(body=json_bytes_brotli, status=status_code, headers={
+        'Content-Encoding': 'br',
+        'Content-Type': 'application/json; charset=utf-8',
+    })
 
 
 def run_rest_api_server(host: str, port: int):
@@ -87,5 +97,6 @@ def run_rest_api_client(tester_destination: str):
 
 def run_rest_api_tester(environment: Environment):
     Process(target=run_rest_api_server, args=(environment.TESTER_LISTEN_HOST, environment.TESTER_LISTEN_PORT,)).start()
-    for _ in range(2):
+    time.sleep(2)
+    for _ in range(1):
         Process(target=run_rest_api_client, args=(environment.TESTER_DESTINATION,)).start()

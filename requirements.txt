@@ -1,3 +1,4 @@
 aiohttp~=3.9
 multidict~=6.0
 asyncio~=3.4
+brotli~=1.1
