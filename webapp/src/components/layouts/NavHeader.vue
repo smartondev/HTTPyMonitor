@@ -9,7 +9,7 @@ import RemoteWsConnectionState from "@/components/layouts/components/RemoteWsCon
     <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="col-12 d-flex align-items-center">
-          <span class="fs-4 fw-bold me-3">HTTP<span class="text-primary">Py</span>Monitor</span>
+          <span class="fs-4 fw-bold me-3">HTT<span class="text-primary">Py</span>Monitor</span>
           <span v-text="getAppVersion()"/>
           <div class="ms-auto">
             <RemoteWsConnectionState/>
