@@ -73,24 +73,29 @@ def run_rest_api_client(tester_destination: str):
     async def main():
         async with aiohttp.ClientSession() as session:
             while True:
-                path = ''.join(random.choices(string.ascii_lowercase, k=random.randint(1, 10)))
-                method = random.choice(['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD', 'PATCH'])
-                body = None
-                if method in ['POST', 'PUT', 'PATCH']:
-                    body = {
-                        'key': ''.join(random.choices(string.ascii_lowercase, k=random.randint(1, 10))),
-                        'value': random.randint(0, 100),
-                    }
-                query_parameters_string = ''
-                if random_boolean():
-                    query_parameters_string = '?' + '&'.join(
-                        [f'key_{i}={random.randint(0, 100)}' for i in range(random.randint(1, 8))])
-                response = await fetch(session, method, f'{tester_destination}/{path}{query_parameters_string}',
-                                       body=body)
-                if len(response) > 150:
-                    response = response[:150] + '...'
-                print('... tester received response: ' + response)
-                await asyncio.sleep(random.random() * 3 + 0.1)
+                try:
+                    path = ''.join(random.choices(string.ascii_lowercase, k=random.randint(1, 10)))
+                    method = random.choice(['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD', 'PATCH'])
+                    body = None
+                    if method in ['POST', 'PUT', 'PATCH']:
+                        body = {
+                            'key': ''.join(random.choices(string.ascii_lowercase, k=random.randint(1, 10))),
+                            'value': random.randint(0, 100),
+                        }
+                    query_parameters_string = ''
+                    if random_boolean():
+                        query_parameters_string = '?' + '&'.join(
+                            [f'key_{i}={random.randint(0, 100)}' for i in range(random.randint(1, 8))])
+                    response = await fetch(session, method, f'{tester_destination}/{path}{query_parameters_string}',
+                                           body=body)
+                    if len(response) > 150:
+                        response = response[:150] + '...'
+                    print('... tester received response: ' + response)
+                    await asyncio.sleep(random.random() * 3 + 0.1)
+                except KeyboardInterrupt:
+                    break
+                except Exception as e:
+                    print('Tester exception:', e)
 
     asyncio.run(main())
 

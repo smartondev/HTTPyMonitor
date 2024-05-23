@@ -34,7 +34,7 @@ const {
       </div>
       <div class="elapsed-time text-end">
         <ElapsedTime :start-timestamp="model.time"
-                     :end-timestamp="model.phase !== RequestLogPhase.RESPONSE_BODY_READ? null : model.lastTime"/>
+                     :end-timestamp="model.phase !== RequestLogPhase.END? null : model.lastTime"/>
       </div>
       <div class="http-status text-center">
         {{ model.response?.status ?? '...' }}

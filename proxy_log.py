@@ -18,6 +18,7 @@ class ProxyLogPhase(Enum):
     REQUEST_FORWARD = 'requestForward'
     RESPONSE_BODY_READING = 'responseBodyReading'
     RESPONSE_BODY_READ = 'responseBodyRead'
+    END = "end"
 
 
 class ContentItem:
@@ -195,6 +196,8 @@ class RequestEntry:
         self._response_headers: HttpHeaders | None = None
         self._response_body: ContentItem | None = None
         self._response_body_mime_type: str | None = None
+        self.exception: Exception | None = None
+        self.exception_traceback: str | None = None
 
     def mutate(self, phase: ProxyLogPhase) -> 'RequestEntry':
         instance = RequestEntry(
@@ -243,6 +246,9 @@ class RequestEntry:
         }
         return response
 
+    def phase_is_end(self) -> bool:
+        return self._phase == ProxyLogPhase.END
+
     @staticmethod
     def _encode_query_parameters(query_parameters: list[tuple[str, str]]) -> list[dict[str, str]]:
         return [{'name': k, 'value': v} for k, v in query_parameters]
@@ -268,6 +274,13 @@ class RequestEntry:
             encoded_content = self._encode_content(self._response_body)
             encoded_content.update({'mimeType': self._response_body_mime_type})
             response['body'] = self._clean_dict(encoded_content)
+        exception = None
+        if self.exception is not None:
+            exception = {
+                'message': str(self.exception),
+                'type': str(type(self.exception)),
+                'traceback': self.exception_traceback,
+            }
         result = {
             'phase': self._phase.value,
             'time': self._time,
@@ -276,6 +289,7 @@ class RequestEntry:
             'request': self._clean_dict(request),
             'response': self._clean_dict(response),
             'forwardDestination': self.forward_destination,
+            'exception': exception,
         }
 
         result_clean = self._clean_dict(result)

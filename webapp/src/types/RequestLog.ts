@@ -17,16 +17,23 @@ export enum RequestLogPhase {
     REQUEST_FORWARD = 'requestForward',
     RESPONSE_BODY_READING = 'responseBodyReading',
     RESPONSE_BODY_READ = 'responseBodyRead',
-    END = 'responseBodyRead',
+    END = 'end',
 }
 
 export type HttpUrlQueryParameters = NameValuePairs;
+
+export type RequestLogException = {
+    message: String,
+    traceback: String,
+    type: String,
+}
 
 export type RequestLog = {
     phase: RequestLogPhase;
     time: number;
     lastTime: number;
     id: number;
+    exception?: RequestLogException,
     request?: {
         method: string;
         url: string;
