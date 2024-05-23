@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import useExpand from "@/services/ui/Expand";
-import {RequestLogException} from "@/types/RequestLog";
+import type {RequestLogException} from "@/types/RequestLog";
 import {isNotUndefined} from "@/helpers/ConditionHelper";
 import {computed} from "vue";
 
@@ -34,7 +34,7 @@ const show = computed(() => {
     </div>
     <div class="row ps-3" v-if="expandedState">
       <div class="col-12">
-        <span class="fw-bold font-monospace">{{ exception?.message }} {{ exception.type }}</span>
+        <span class="fw-bold font-monospace">{{ exception?.message }} {{ exception?.type }}</span>
         <pre v-text="exception?.traceback"/>
       </div>
     </div>
