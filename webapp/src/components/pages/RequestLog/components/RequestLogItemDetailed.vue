@@ -2,7 +2,7 @@
 
 import NameValueListContainer from "@/components/pages/RequestLog/containters/NameValueListContainer.vue";
 import useRequestLogUi, {phase2string} from "@/components/pages/RequestLog/services/RequestLog";
-import {defineProps} from "vue";
+import {computed, defineProps} from "vue";
 import type {RequestLogUi} from "@/types/RequestLogUi";
 import RequestLogItemSlim from "./RequestLogItemSlim.vue";
 import HttpBody from "@/components/pages/RequestLog/components/HttpBody.vue";
@@ -10,6 +10,9 @@ import PropertyValueContainer from "@/components/pages/RequestLog/containters/Pr
 import Tag from "@/components/pages/RequestLog/components/Tag.vue";
 import TagHttpStatus from "@/components/pages/RequestLog/components/TagHttpStatus.vue";
 import TagBodySize from "@/components/pages/RequestLog/components/TagBodySize.vue";
+import ExceptionView from "@/components/pages/RequestLog/components/ExceptionView.vue";
+import {isNotUndefined} from "@/helpers/ConditionHelper";
+import {RequestLogPhase} from "@/types/RequestLog";
 
 defineEmits(['drop', 'toggle-sticky', 'toggle-expanded'])
 type Props = {
@@ -23,6 +26,8 @@ const {
   variant_by_status,
   variant_by_method,
 } = useRequestLogUi(props.model)
+
+const isPhaseEnd = computed(() => props.model.phase === RequestLogPhase.END)
 </script>
 
 <template>
@@ -53,20 +58,22 @@ const {
           <NameValueListContainer title="Query parameters"
                                   :list="model.request?.queryParameters"/>
         </div>
-        <div class="col-lg-4 col-md-6 col-sm-12">
+        <div class="col-lg-4 col-md-6 col-sm-12"
+             v-if="isNotUndefined(model.response?.headers) || !isPhaseEnd">
           <NameValueListContainer title="Response headers"
                                   :list="model.response?.headers"
                                   :placeholder="true"/>
         </div>
       </div>
       <div class="row">
-        <div class="col-12">
+        <div class="col-12" v-if="isNotUndefined(model.request?.body)">
           <HttpBody :body="model.request?.body" title="Request body" :placeholder="true"/>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
+        <div class="col-12" v-if="isNotUndefined(model.response?.body) || !isPhaseEnd">
           <HttpBody :body="model.response?.body" title="Response body" :placeholder="true" :expanded="true"/>
+        </div>
+        <div class="col-12">
+          <ExceptionView :exception="model.exception"/>
         </div>
       </div>
     </div>
