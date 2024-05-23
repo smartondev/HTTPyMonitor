@@ -25,7 +25,8 @@ class JsonFormatter(FormatterInterface):
     def format(self, content: bytes) -> str | None:
         try:
             parsed_data = json.loads(content.decode('utf-8'))
-            return truncate(json.dumps(parsed_data, indent=2, ensure_ascii=False), lines=self._max_lines)
+            return truncate(json.dumps(parsed_data, indent=2, ensure_ascii=False), lines=self._max_lines,
+                            columns=self._max_columns)
         except(json.JSONDecodeError, UnicodeDecodeError):
             return None
 
