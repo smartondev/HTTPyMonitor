@@ -4,13 +4,13 @@ import {copyToClipboard} from "@/helpers/Clipboard";
 import {isNotNullNorUndefined} from "@/helpers/ConditionHelper";
 
 type Props = {
-  title: string,
+  title?: string | null,
   content: string | undefined | null,
   tooltip?: string | null,
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  title: 'Copy to clipboard',
+  title: null,
   content: null,
   tooltip: null,
 });
