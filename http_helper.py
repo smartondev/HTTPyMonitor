@@ -9,8 +9,19 @@ def get_mime_type_from_content_type(content_type: str | None) -> str | None:
     return content_type.split(';')[0].strip()
 
 
-def get_host_from_url(url: str) -> str:
-    return urlparse(url).hostname
+def get_host_with_port_from_url(url: str) -> str:
+    parsed = urlparse(url)
+    port = ''
+    if parsed.port is not None:
+        port = f':{parsed.port}'
+    return f'{parsed.hostname}{port}'
+
+
+def url_replace_host(url: str, new_host: str | None) -> str:
+    if new_host is None:
+        return url
+    parsed = urlparse(url)
+    return parsed._replace(netloc=new_host).geturl()
 
 
 def parse_query_params(url: str) -> list[tuple[str, str]] | None:
