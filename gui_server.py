@@ -18,7 +18,8 @@ async def handle_download(request):
     content = proxy_log.get_content_storage().read(hash_value)
     if content is None:
         return web.Response(status=404)
-    return web.Response(body=content, status=200, headers={'Content-Type': 'application/octet-stream'})
+    content_type = request.query.get('content_type', 'application/octet-stream')
+    return web.Response(body=content, status=200, headers={'Content-Type': content_type})
 
 
 def run_gui_server(environment: Environment, proxy_log: ProxyLog):

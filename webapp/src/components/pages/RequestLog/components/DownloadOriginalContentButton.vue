@@ -35,7 +35,7 @@ const downloadUrl = computed(() => {
   <a :href="downloadUrl" target="_blank" class="btn btn-sm btn-outline-primary me-2"
      v-if="isNotUndefined(body?.hash)"
      title="Download original content">
-    <span class="bi bi-download"/> Download
+    <span class="bi bi-download"/>
   </a>
 </template>
 
