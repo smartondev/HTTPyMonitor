@@ -2,4 +2,4 @@
 # CHANGELOG
 
 ## latest
-fix: favicon (#1)
+- fix: favicon (#1)
