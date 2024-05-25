@@ -6,7 +6,7 @@ from aiohttp import web
 from multidict import CIMultiDict
 
 from environment import Environment
-from http_helper import parse_query_params, get_host_from_url, http_remove_not_forwardable_headers
+from http_helper import parse_query_params, get_host_with_port_from_url, http_remove_not_forwardable_headers, url_replace_host
 from proxy_log import ProxyLog, ProxyLogPhase, HttpHeaders, ContentStorage, RequestEntry
 
 
@@ -16,15 +16,19 @@ async def handle_proxy(request: aiohttp.web.Request):
     try:
         environment: Environment = request.app.get('environment')
         destination = environment.PROXY_DESTINATION
-        host_from_destination = get_host_from_url(destination)
+        host_from_destination = get_host_with_port_from_url(destination)
         forward_headers = CIMultiDict(request.headers)
         if environment.PROXY_OVERRIDE_HOST_HEADER:
             forward_headers['host'] = host_from_destination
         request_headers = HttpHeaders.create_by(forward_headers)
         http_remove_not_forwardable_headers(forward_headers)
+        request_query_params = request.query_string
+        if request_query_params:
+            request_query_params = f'?{request_query_params}'
+        destination_url = f'{destination}{request.path}{request_query_params}'
         log = proxy_log.new_entry(
             method=request.method,
-            url=str(request.url), headers=request_headers,
+            url=url_replace_host(str(destination_url), forward_headers['host']), headers=request_headers,
             query_parameters=parse_query_params(str(request.url))
         )
         async with (aiohttp.ClientSession() as session):
@@ -35,10 +39,6 @@ async def handle_proxy(request: aiohttp.web.Request):
                 log = log.mutate(ProxyLogPhase.REQUEST_BODY_READING)
                 proxy_log.put(log)
                 data = await request.read()
-            request_query_params = request.query_string
-            if request_query_params:
-                request_query_params = f'?{request_query_params}'
-            destination_url = f'{destination}{request.path}{request_query_params}'
             print(f'{request.method} {request.url} -> {destination_url}...')
             log = log.mutate(ProxyLogPhase.REQUEST_FORWARD)
             log.forward_destination = destination_url
