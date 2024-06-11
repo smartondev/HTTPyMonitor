@@ -55,20 +55,34 @@ async def handle(request):
     })
 
 
-def run_rest_api_server(host: str, port: int):
-    app = web.Application()
+def run_rest_api_server(environment: Environment):
+    app = web.Application(client_max_size=environment.HTTP_MAX_REQUEST_SIZE_MB * 1024 ** 2)
     app.router.add_route('*', '/{any:.*}', handle)
     try:
-        web.run_app(app, host=host, port=port)
+        web.run_app(app, host=environment.TESTER_LISTEN_HOST, port=environment.TESTER_LISTEN_PORT)
     except KeyboardInterrupt:
         app.shutdown()
 
 
 def run_rest_api_client(tester_destination: str):
     async def fetch(session, method, url, body):
-        print(f'Tester fetch {method} {url} {body}...')
-        async with session.request(method, url, json=body) as response:
-            return await response.text()
+        body_str = ''
+        if body is str:
+            body_str = body
+        elif body is dict:
+            body_str = json.dumps(body)
+        if len(body_str) > 128:
+            body_str = body_str[:128] + '...'
+        print(f'Tester fetch {method} {url} {body_str}...')
+        if body is dict:
+            async with session.request(method, url, json=body) as response:
+                return await response.text()
+        else:
+            headers = {
+                'content-type': 'text/plain',
+            }
+            async with session.request(method, url, data=body, headers=headers) as response:
+                return await response.text()
 
     async def main():
         async with aiohttp.ClientSession() as session:
@@ -86,6 +100,8 @@ def run_rest_api_client(tester_destination: str):
                     if random_boolean():
                         query_parameters_string = '?' + '&'.join(
                             [f'key_{i}={random.randint(0, 100)}' for i in range(random.randint(1, 8))])
+                    if random.randint(0, 15) < 1:
+                        body = ''.join(random.choices(string.ascii_lowercase, k=2 * 1024 * 1024))
                     response = await fetch(session, method, f'{tester_destination}/{path}{query_parameters_string}',
                                            body=body)
                     if len(response) > 150:
@@ -101,7 +117,7 @@ def run_rest_api_client(tester_destination: str):
 
 
 def run_rest_api_tester(environment: Environment):
-    Process(target=run_rest_api_server, args=(environment.TESTER_LISTEN_HOST, environment.TESTER_LISTEN_PORT,)).start()
+    Process(target=run_rest_api_server, args=(environment,)).start()
     time.sleep(2)
     for _ in range(1):
         Process(target=run_rest_api_client, args=(environment.TESTER_DESTINATION,)).start()

@@ -49,9 +49,11 @@ async def handle_proxy(request: aiohttp.web.Request):
             ) as response:
                 return await handel_proxy_response(response, log, proxy_log)
     except Exception as e:
+        print(f"Exception: {e}")
         if log is not None:
             log = log.mutate(ProxyLogPhase.END)
-            log.exception = e
+            log.exception_type = str(type(e))
+            log.exception_message = str(e)
             log.exception_traceback = traceback.format_exc()
             proxy_log.put(log)
     finally:
@@ -88,7 +90,7 @@ async def storage_garbage_task(app):
 
 
 def run_proxy_server(environment: Environment, proxy_log: ProxyLog):
-    app = web.Application()
+    app = web.Application(client_max_size=environment.HTTP_MAX_REQUEST_SIZE_MB * 1024 ** 2)
     app.setdefault('environment', environment)
     app.setdefault('proxy_log', proxy_log)
     app.router.add_route('*', '/{any:.*}', handle_proxy)

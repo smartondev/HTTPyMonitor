@@ -14,6 +14,7 @@ class Environment:
         self.PROXY_DESTINATION: str = f'http://127.0.0.1:{self.TESTER_LISTEN_PORT}'
         self.TESTER_DESTINATION: str = f'http://127.0.0.1:{self.PROXY_LISTEN_PORT}'
         self.STORAGE_PATH: str = os.path.join('.', 'storage')
+        self.HTTP_MAX_REQUEST_SIZE_MB: int = 16
 
     @staticmethod
     def from_os_env() -> 'Environment':
@@ -28,7 +29,8 @@ class Environment:
         env.TESTER_MODE_ENABLED = env.TESTER_LISTEN_HOST is not None and env.TESTER_LISTEN_PORT > 0
         env.PROXY_DESTINATION = os.getenv('PROXY_DESTINATION',
                                           f'http://{env.TESTER_LISTEN_HOST}:{env.TESTER_LISTEN_PORT}')
-        env.STORAGE_PATH = str = os.getenv('STORAGE_PATH', os.path.join('.', 'storage'))
+        env.STORAGE_PATH = os.getenv('STORAGE_PATH', os.path.join('.', 'storage'))
+        env.HTTP_MAX_REQUEST_SIZE_MB = int(os.getenv('HTTP_MAX_REQUEST_SIZE_MB', 16))
         return env
 
     @staticmethod
@@ -49,6 +51,7 @@ class Environment:
         print('PROXY_DESTINATION:', self.PROXY_DESTINATION)
         print('PROXY_OVERRIDE_HOST_HEADER:', self.PROXY_OVERRIDE_HOST_HEADER)
         print('STORAGE_PATH:', self.STORAGE_PATH)
+        print('HTTP_MAX_REQUEST_SIZE_MB:', self.HTTP_MAX_REQUEST_SIZE_MB)
         if self.TESTER_MODE_ENABLED:
             print('TESTER_LISTEN_HOST:', self.TESTER_LISTEN_HOST)
             print('TESTER_LISTEN_PORT:', self.TESTER_LISTEN_PORT)
