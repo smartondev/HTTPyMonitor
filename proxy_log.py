@@ -196,7 +196,8 @@ class RequestEntry:
         self._response_headers: HttpHeaders | None = None
         self._response_body: ContentItem | None = None
         self._response_body_mime_type: str | None = None
-        self.exception: Exception | None = None
+        self.exception_message: str | None = None
+        self.exception_type: str | None = None
         self.exception_traceback: str | None = None
 
     def mutate(self, phase: ProxyLogPhase) -> 'RequestEntry':
@@ -275,10 +276,10 @@ class RequestEntry:
             encoded_content.update({'mimeType': self._response_body_mime_type})
             response['body'] = self._clean_dict(encoded_content)
         exception = None
-        if self.exception is not None:
+        if self.exception_type is not None:
             exception = {
-                'message': str(self.exception),
-                'type': str(type(self.exception)),
+                'message': self.exception_message,
+                'type': self.exception_type,
                 'traceback': self.exception_traceback,
             }
         result = {
