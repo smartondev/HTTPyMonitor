@@ -6,6 +6,7 @@ COPY webapp/package*.json .
 RUN npm i -D
 COPY webapp/*.* .
 COPY webapp/src src
+COPY webapp/public public
 RUN npm run build
 
 # run python app
