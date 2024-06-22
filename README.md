@@ -2,6 +2,8 @@
 
 Simple HTTP forwarder and monitor with web GUI.
 
+![HTTPyMonitor screenshot](doc/images/HTTPyMonitor-screenshot.png)
+
 ## Topology
 
 ```
