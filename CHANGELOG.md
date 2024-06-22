@@ -1,7 +1,7 @@
 
 # CHANGELOG
 
-## latest
+## 0.4.0 (2024-06-22)
 - fix: large request/response (#24)
 - enh: max HTTP client data size env variable (#12)
 - fix: favicon manifest.json 404 (#1)
