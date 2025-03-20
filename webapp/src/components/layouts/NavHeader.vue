@@ -1,7 +1,6 @@
 <script setup lang="ts">
-
-import {getAppVersion} from "@/helpers/EnvironmentHelper";
-import RemoteWsConnectionState from "@/components/layouts/components/RemoteWsConnectionState.vue";
+import { getAppVersion } from '@/helpers/EnvironmentHelper'
+import RemoteWsConnectionState from '@/components/layouts/components/RemoteWsConnectionState.vue'
 </script>
 
 <template>
@@ -10,9 +9,9 @@ import RemoteWsConnectionState from "@/components/layouts/components/RemoteWsCon
       <div class="row justify-content-center">
         <div class="col-12 d-flex align-items-center">
           <span class="fs-4 fw-bold me-3">HTT<span class="text-primary">Py</span>Monitor</span>
-          <span v-text="getAppVersion()"/>
+          <span v-text="getAppVersion()" />
           <div class="ms-auto">
-            <RemoteWsConnectionState/>
+            <RemoteWsConnectionState />
           </div>
         </div>
       </div>

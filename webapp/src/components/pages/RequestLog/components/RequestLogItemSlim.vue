@@ -1,40 +1,52 @@
 <script setup lang="ts">
+import { defineProps } from 'vue'
+import useRequestLogUi from '@/composables/useRequestLog'
+import RequestLogItemHeaderAction from './RequestLogItemHeaderAction.vue'
+import type { RequestLogUi } from '@/types/RequestLogUi'
+import LogTime from '@/components/pages/RequestLog/components/LogTime.vue'
+import ElapsedTime from '@/components/pages/RequestLog/components/ElapsedTime.vue'
+import { RequestLogPhase } from '@/types/RequestLog'
 
-import {defineProps} from "vue";
-import useRequestLogUi from "@/components/pages/RequestLog/services/RequestLog";
-import RequestLogItemHeaderAction from "./RequestLogItemHeaderAction.vue";
-import type {RequestLogUi} from "@/types/RequestLogUi";
-import LogTime from "@/components/pages/RequestLog/components/LogTime.vue";
-import ElapsedTime from "@/components/pages/RequestLog/components/ElapsedTime.vue";
-import {RequestLogPhase} from "@/types/RequestLog";
+const emits = defineEmits<{
+  (event: 'drop', model: RequestLogUi): void
+  (event: 'toggle-sticky', model: RequestLogUi): void
+  (event: 'toggle-expanded', model: RequestLogUi): void
+}>()
 
-defineEmits(['drop', 'toggle-sticky', 'toggle-expanded'])
 type Props = {
-  model: RequestLogUi,
+  model: RequestLogUi
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  model: () => ({} as RequestLogUi),
+  model: () => ({}) as RequestLogUi
 })
 
-const {
-  variant_by_status,
-  variant_by_method,
-} = useRequestLogUi(props.model)
+const { variantByStatus, variantByMethod } = useRequestLogUi(props.model)
 
+const clickDrop = (): void => {
+  emits('drop', props.model)
+}
+
+const clickToggleSticky = (): void => {
+  emits('toggle-sticky', props.model)
+}
 </script>
 
 <template>
-  <div class="log container-fluid cursor-pointer mb-lg-0" @click="$emit('toggle-expanded', model)" :class="[
-      variant_by_method, variant_by_status,
-  ]">
+  <div
+    class="log container-fluid cursor-pointer mb-lg-0"
+    @click="$emit('toggle-expanded', model)"
+    :class="[variantByMethod, variantByStatus]"
+  >
     <div class="d-grid gap-1">
       <div class="time">
-        <LogTime :timestamp="model.time"/>
+        <LogTime :timestamp="model.time" />
       </div>
       <div class="elapsed-time text-end">
-        <ElapsedTime :start-timestamp="model.time"
-                     :end-timestamp="model.phase !== RequestLogPhase.END? null : model.lastTime"/>
+        <ElapsedTime
+          :start-timestamp="model.time"
+          :end-timestamp="model.phase !== RequestLogPhase.END ? null : model.lastTime"
+        />
       </div>
       <div class="http-status text-center">
         {{ model.response?.status ?? '...' }}
@@ -46,38 +58,39 @@ const {
         {{ model.request?.url }}
       </div>
       <div class="actions text-end">
-        <RequestLogItemHeaderAction :model="model" @drop="$emit('drop', model)"
-                                    @toggle-sticky="$emit('toggle-sticky', model)"/>
+        <RequestLogItemHeaderAction
+          :model="model"
+          @drop="clickDrop"
+          @toggle-sticky="clickToggleSticky"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-@import "@/assets/colors";
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/mixins";
+@use '@/assets/colors' as *;
+@use 'bootstrap' as *;
 
 @include media-breakpoint-down(lg) {
   .d-grid {
     grid-template-areas:
-    "time elapsed-time http-status http-method spacer actions"
-    "url url url url url actions";
-    grid-template-columns: 90px 80px 60px 150px 1fr 100px;
+      'time elapsed-time http-status http-method spacer actions'
+      'url url url url url actions';
+    grid-template-columns: 120px 80px 60px 150px 1fr 100px;
   }
 }
 
 @include media-breakpoint-up(lg) {
   .d-grid {
-    grid-template-areas:
-    "time elapsed-time http-status http-method url actions";
-    grid-template-columns: 90px 80px 60px 150px 1fr 100px;
+    grid-template-areas: 'time elapsed-time http-status http-method url actions';
+    grid-template-columns: 120px 80px 60px 150px 1fr 100px;
   }
   .log {
     .actions {
       display: none;
     }
+
     :hover .actions {
       display: block;
     }
@@ -113,8 +126,6 @@ const {
 
 @each $method, $color in $methodVariants {
   .variant-#{$method} {
-
-
     &.log:hover {
       .http-method {
         background-color: lighten($color, 10%);
@@ -126,18 +137,17 @@ const {
       transition: color 0.5s ease-in;
 
       .d-lg-block.actions {
-        opacity: 1.0;
+        opacity: 1;
         transition: opacity 0.5s linear;
       }
     }
 
     &.log:not(:hover) {
       .d-lg-block.actions {
-        opacity: 0.0;
+        opacity: 0;
       }
     }
   }
-
 }
 
 .card-header {

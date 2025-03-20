@@ -1,23 +1,23 @@
-export function isUndefined(value: any): boolean {
-    return value === undefined;
+export const isUndefined = (value: any): boolean => {
+  return value === undefined
 }
 
-export function isNotUndefined(value: any): boolean {
-    return !isUndefined(value);
+export const isNotUndefined = (value: any): boolean => {
+  return !isUndefined(value)
 }
 
-export function isNull(value: any): boolean {
-    return value === null;
+export const isNull = (value: any): boolean => {
+  return value === null
 }
 
-export function isNotNull(value: any): boolean {
-    return !isNull(value);
+export const isNotNull = (value: any): boolean => {
+  return !isNull(value)
 }
 
-export function isNullOrUndefined(value: any): boolean {
-    return isUndefined(value) || isNull(value);
+export const isNullOrUndefined = (value: any): boolean => {
+  return isUndefined(value) || isNull(value)
 }
 
-export function isNotNullNorUndefined(value: any): boolean {
-    return !isNullOrUndefined(value);
+export const isNotNullNorUndefined = (value: any): boolean => {
+  return !isNullOrUndefined(value)
 }
