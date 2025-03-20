@@ -8,7 +8,7 @@
       <div class="row">
         <div class="col-12 text-center text-light-emphasis font-monospace">
           HTTPyMonitor by <a href="https://github.com/kamarton" target="_blank">Márton Somogyi</a> |
-          2024 |
+          2024-2025 |
           <a href="https://github.com/smartondev/HTTPyMonitor" target="_blank">Repo on the GitHub</a> |
           <a href="https://hub.docker.com/r/smartondev/httpymonitor" target="_blank">Docker container</a>
         </div>

@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import {RouterView} from 'vue-router'
-import NavHeader from "@/components/layouts/NavHeader.vue";
-import Footer from "@/components/layouts/Footer.vue";
-
+import { RouterView } from 'vue-router'
+import NavHeader from '@/components/layouts/NavHeader.vue'
+import Footer from '@/components/layouts/Footer.vue'
 </script>
 
 <template>
-  <NavHeader/>
+  <NavHeader />
   <main class="container-fluid m-auto my-1 flex-grow-1">
-    <RouterView/>
+    <RouterView />
   </main>
-  <Footer/>
+  <Footer />
 </template>
 
 <style scoped>

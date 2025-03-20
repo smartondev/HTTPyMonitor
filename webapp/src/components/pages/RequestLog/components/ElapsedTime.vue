@@ -1,34 +1,33 @@
 <script setup lang="ts">
-
-import useElapsedTimer from "@/services/ui/ElapsedTimer";
-import {computed, ref, watch} from "vue";
+import useElapsedTimer from '@/composables/useElapsedTimer'
+import { computed, ref, watch } from 'vue'
+import type { NullableNumber } from '@/types/Nullable'
 
 type Props = {
-  startTimestamp: number,
-  endTimestamp: number | null,
+  startTimestamp: number
+  endTimestamp: NullableNumber
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  endTimestamp: null,
+  endTimestamp: null
 })
 
 const endTimestampRef = ref(props.endTimestamp)
-watch(() => props.endTimestamp, (value) => {
-  endTimestampRef.value = value
-})
+watch(
+  () => props.endTimestamp,
+  (value) => {
+    endTimestampRef.value = value
+  }
+)
 
-const {
-  diff,
-} = useElapsedTimer(props.startTimestamp, endTimestampRef)
+const { diff } = useElapsedTimer(props.startTimestamp, endTimestampRef)
 
 const diffFormattedSeconds = computed(() => {
-  return (diff.value).toFixed(1)
+  return diff.value.toFixed(1)
 })
 const diffFormattedMilliseconds = computed(() => {
   return (diff.value * 1000).toFixed(0)
 })
-
-
 </script>
 
 <template>
@@ -38,6 +37,4 @@ const diffFormattedMilliseconds = computed(() => {
   </span>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

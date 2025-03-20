@@ -12,6 +12,13 @@
     }
   ],
   "compilerOptions": {
-    "module": "NodeNext"
-  }
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
 }
