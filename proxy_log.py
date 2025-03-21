@@ -110,6 +110,8 @@ class ContentStorage:
                 if time.time() - os.path.getmtime(file_path) > time_limit:
                     os.remove(file_path)
                     counter = counter + 1
+        if counter == 0:
+            return
         print(f'Garbage collected {counter} files')
 
     def _gen_path(self, content_hash: str) -> str:
