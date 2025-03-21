@@ -1,6 +1,9 @@
 
 # CHANGELOG
 
+## dev
+- enh: improve garbage collection logic and increase sleep duration
+
 ## 0.5.0 (2025-03-20)
 - enh: frontend updates
 
