@@ -86,7 +86,7 @@ async def storage_garbage_task(app):
     content_storage: ContentStorage = app.get('proxy_log').get_content_storage()
     while True:
         content_storage.garbage()
-        await asyncio.sleep(60)
+        await asyncio.sleep(600)
 
 
 def run_proxy_server(environment: Environment, proxy_log: ProxyLog):
