@@ -1,8 +1,16 @@
-name: build and pull versioned and latest docker image
+name: build and pull nightly docker image
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - "main"
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE'
+      - 'CHANGELOG.md'
+      - 'CONTRIBUTING.md'
+      - 'LICENSE'
+      - 'doc/**'
 
 jobs:
   build:
@@ -13,7 +21,7 @@ jobs:
       - name: Get the version
         id: get_version
         run: |
-          VERSION=$(git describe --tags --abbrev=0 2>/dev/null || exit 1)
+          VERSION=$(date +%Y%m%d)-$(git rev-parse --short=6 HEAD)-nightly
           echo ::set-output name=VERSION::${VERSION}
       - name: Write version to webapp
         run: echo "VITE_APP_VERSION=${{ steps.get_version.outputs.VERSION }}" >> webapp/.env.production
@@ -30,6 +38,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: |
-            "${{ secrets.DOCKERHUB_USERNAME }}/httpymonitor:${{ steps.get_version.outputs.VERSION }}"
-            "${{ secrets.DOCKERHUB_USERNAME }}/httpymonitor:latest"
+          tags: "${{ secrets.DOCKERHUB_USERNAME }}/httpymonitor:nightly"

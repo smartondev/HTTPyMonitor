@@ -36,6 +36,12 @@ This example:
 - listens on port `8081` for incoming HTTP requests
 - names the container `httpymonitor-github-api`
 
+## Docker images versions
+
+- `nightly`: `smartondev/httpymonitor:nightly` (latest)
+- `x.y.z`: `smartondev/httpymonitor:x.y.z` (stable)
+- `latest`: `smartondev/httpymonitor:latest` (latest stable)
+
 ## Author
 
 [Márton Somogyi](https://github.com/kamarton)
