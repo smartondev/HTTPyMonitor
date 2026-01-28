@@ -10,7 +10,7 @@ COPY webapp/public public
 RUN npm run build
 
 # run python app
-FROM python:3.2-alpine
+FROM python:3.13-alpine
 
 ENV GUI_PORT_LISTEN 8080
 ENV PROXY_PORT_LISTEN 8081
