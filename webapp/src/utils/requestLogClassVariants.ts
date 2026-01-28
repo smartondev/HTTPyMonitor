@@ -1,5 +1,5 @@
-import { computed } from 'vue'
-import type { RequestLogUi } from '@/types/RequestLogUi'
+import {computed} from 'vue'
+import type {RequestLogUi} from '@/types/RequestLogUi'
 
 export default function useRequestLogUi(model: RequestLogUi) {
   const variantByStatus = computed<string>(() => {

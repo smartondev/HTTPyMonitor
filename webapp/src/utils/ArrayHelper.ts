@@ -4,7 +4,8 @@ export const findLastIndexOf = <T>(
   indexFrom?: number | null
 ): number => {
   for (let i = indexFrom ?? array.length - 1; i >= 0; i--) {
-    if (predicate(array[i])) {
+    const item = array[i]
+    if (item !== undefined && predicate(item)) {
       return i
     }
   }

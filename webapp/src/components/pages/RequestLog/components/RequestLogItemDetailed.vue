@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import NameValueListContainer from '@/components/pages/RequestLog/containters/NameValueListContainer.vue'
-import useRequestLogUi from '@/composables/useRequestLog'
-import { computed, defineProps } from 'vue'
-import type { RequestLogUi } from '@/types/RequestLogUi'
+import useRequestLogUi from '@/utils/requestLogClassVariants'
+import {computed} from 'vue'
+import type {RequestLogUi} from '@/types/RequestLogUi'
 import RequestLogItemSlim from './RequestLogItemSlim.vue'
 import HttpBody from '@/components/pages/RequestLog/components/HttpBody.vue'
 import PropertyValueContainer from '@/components/pages/RequestLog/containters/PropertyValueContainer.vue'
@@ -10,9 +10,9 @@ import Tag from '@/components/pages/RequestLog/components/Tag.vue'
 import TagHttpStatus from '@/components/pages/RequestLog/components/TagHttpStatus.vue'
 import TagBodySize from '@/components/pages/RequestLog/components/TagBodySize.vue'
 import ExceptionView from '@/components/pages/RequestLog/components/ExceptionView.vue'
-import { isNotUndefined } from '@/helpers/ConditionHelper'
-import { RequestLogPhase } from '@/types/RequestLog'
-import useHttpPhaseToString from '@/composables/useHttpPhaseToString'
+import {isNotUndefined} from '@/utils/ConditionHelper'
+import {RequestLogPhase} from '@/types/RequestLog'
+import httpPhaseToString from '@/formatters/httpPhaseToString'
 
 const emits = defineEmits<{
   (e: 'toggle-sticky', model: RequestLogUi): void
@@ -55,7 +55,7 @@ const clickToggleExpanded = (): void => {
     <div class="card-body pt-1" v-if="model.isExpanded">
       <div class="row">
         <div class="col-12 mb-2">
-          <Tag property="Phase" :value="useHttpPhaseToString(model.phase)" />
+          <Tag property="Phase" :value="httpPhaseToString(model.phase)" />
           <TagHttpStatus :status="model.response?.status" />
           <TagBodySize property="Request body size" :length="model.request?.body?.length" />
           <TagBodySize property="Response body size" :length="model.response?.body?.length" />

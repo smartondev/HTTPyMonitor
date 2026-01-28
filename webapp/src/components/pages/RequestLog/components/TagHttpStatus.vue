@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import Tag from '@/components/pages/RequestLog/components/Tag.vue'
-import { computed } from 'vue'
-import { isNotNullNorUndefined } from '@/helpers/ConditionHelper'
-import useHttpReasonByStatusCode from '@/composables/useHttpReasonByStatusCode'
-import type { OptionalNumber } from '@/types/Optional'
+import {computed} from 'vue'
+import {isNotNullNorUndefined} from '@/utils/ConditionHelper'
+import httpReasonByStatusCode from '@/formatters/httpReasonByStatusCode'
+import type {OptionalNumber} from '@/types/Optional'
 
 type Props = {
   status: OptionalNumber
@@ -36,7 +36,7 @@ const value = computed(() => {
   if (props.status === undefined) {
     return null
   }
-  return `${props.status} ${useHttpReasonByStatusCode(props.status)}`
+  return `${props.status} ${httpReasonByStatusCode(props.status)}`
 })
 </script>
 

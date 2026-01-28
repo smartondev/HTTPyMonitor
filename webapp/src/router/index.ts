@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import RequestLogListPage from '@/components/pages/RequestLog/RequestLogListPage.vue'
 
 const router = createRouter({

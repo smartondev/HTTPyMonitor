@@ -64,8 +64,8 @@ const httpReasons: Record<number, string> = {
   511: 'Network Authentication Required'
 }
 
-const useHttpReasonByStatusCode = (statusCode: number) : string => {
+const httpReasonByStatusCode = (statusCode: number) : string => {
   return httpReasons[statusCode] ?? 'Unknown'
 }
 
-export default useHttpReasonByStatusCode;
+export default httpReasonByStatusCode;

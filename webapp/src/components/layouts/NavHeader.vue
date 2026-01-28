@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getAppVersion } from '@/helpers/EnvironmentHelper'
+import {getAppVersion} from '@/utils/EnvironmentHelper'
 import RemoteWsConnectionState from '@/components/layouts/components/RemoteWsConnectionState.vue'
 </script>
 

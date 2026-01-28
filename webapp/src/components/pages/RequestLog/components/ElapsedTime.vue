@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import useElapsedTimer from '@/composables/useElapsedTimer'
-import { computed, ref, watch } from 'vue'
-import type { NullableNumber } from '@/types/Nullable'
+import {computed, ref, watch} from 'vue'
+import type {NullableNumber} from '@/types/Nullable'
 
 type Props = {
   startTimestamp: number

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { randomInt } from '@/helpers/RandomHelper'
+import {onMounted, ref} from 'vue'
+import {randomInt} from '@/utils/RandomHelper'
 
 type Props = {
   wordsMin?: number

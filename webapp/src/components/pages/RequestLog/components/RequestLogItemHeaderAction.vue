@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { RequestLogUi } from '@/types/RequestLogUi'
-import { computed } from 'vue'
+import type {RequestLogUi} from '@/types/RequestLogUi'
+import {computed} from 'vue'
 
 const emits = defineEmits<{
   (e: 'toggle-sticky', model: RequestLogUi): void

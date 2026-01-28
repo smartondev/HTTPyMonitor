@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { RequestLogUiList, RequestLogUiStates } from '@/types/RequestLogUi'
+import type {RequestLogUiList, RequestLogUiStates} from '@/types/RequestLogUi'
 import RequestLogItem from '../components/RequestLogItemDetailed.vue'
 import RequestLogItemSlim from '../components/RequestLogItemSlim.vue'
 

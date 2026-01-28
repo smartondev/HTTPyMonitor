@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { getDownloadUrlPrefix } from '@/helpers/EnvironmentHelper'
-import type { RequestLogBody } from '@/types/RequestLog'
-import { isNotUndefined, isNullOrUndefined } from '@/helpers/ConditionHelper'
-import type { Optional } from '@/types/Optional'
+import {computed} from 'vue'
+import {getDownloadUrlPrefix} from '@/utils/EnvironmentHelper'
+import type {RequestLogBody} from '@/types/RequestLog'
+import {isNotUndefined, isNullOrUndefined} from '@/utils/ConditionHelper'
+import type {Optional} from '@/types/Optional'
 
 type Props = {
   body: Optional<RequestLogBody>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { RemoteWsConnectionStates } from '@/composables/useRemoteWs'
-import { inject } from 'vue'
-import { RemoteWsClientConnectionState } from '@/keys'
+import {inject} from 'vue'
+import {RemoteWsClientConnectionState} from '@/keys'
+import {RemoteWsConnectionStates} from "@/enums/RemoteWsConnectionStates";
 
 const connectionState = inject(RemoteWsClientConnectionState)
 </script>

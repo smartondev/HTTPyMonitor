@@ -1,10 +1,10 @@
-import type { NullableString } from '@/types/Nullable'
-import type { MaybeNumber } from '@/types/Maybe'
+import type {NullableString} from '@/types/Nullable'
+import type {MaybeNumber} from '@/types/Maybe'
 
 const sizeUnits = ['Bytes', 'KBytes', 'MBytes', 'GBytes', 'TBytes']
 const unitStep = 1024
 
-const useToBytesFormatter = (bytes: MaybeNumber): NullableString => {
+const bytesFormatter = (bytes: MaybeNumber): NullableString => {
   if (bytes === null || bytes === undefined) {
     return null
   }
@@ -19,4 +19,4 @@ const useToBytesFormatter = (bytes: MaybeNumber): NullableString => {
   return `${(bytes / Math.pow(unitStep, i)).toFixed(fraction)} ${sizeUnits[i]}`
 }
 
-export default useToBytesFormatter
+export default bytesFormatter

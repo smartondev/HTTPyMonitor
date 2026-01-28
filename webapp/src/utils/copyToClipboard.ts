@@ -1,8 +1,8 @@
-import { isNullOrUndefined } from '@/helpers/ConditionHelper'
-import type { MaybeString } from '@/types/Maybe'
-import type { Nullable } from '@/types/Nullable'
+import {isNullOrUndefined} from '@/utils/ConditionHelper'
+import type {MaybeString} from '@/types/Maybe'
+import type {Nullable} from '@/types/Nullable'
 
-const useCopyToClipboard = async (
+const copyToClipboard = async (
   text: MaybeString,
   success: Nullable<() => void> = null,
   fail: Nullable<() => void> = null
@@ -22,4 +22,4 @@ const useCopyToClipboard = async (
   }
 }
 
-export default useCopyToClipboard
+export default copyToClipboard

@@ -1,4 +1,4 @@
-aiohttp~=3.9
-multidict~=6.0
-asyncio~=3.4
-brotli~=1.1
+aiohttp~=3.13
+multidict~=6.7
+asyncio~=4.0
+brotli~=1.2

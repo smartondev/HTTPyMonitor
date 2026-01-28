@@ -1,0 +1,5 @@
+export enum RemoteWsConnectionStates {
+  DISCONNECTED = 'DISCONNECTED',
+  CONNECTING = 'CONNECTING',
+  CONNECTED = 'CONNECTED'
+}
