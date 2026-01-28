@@ -1,5 +1,5 @@
 # build web files
-FROM node:20-alpine AS webapp
+FROM node:24-alpine AS webapp
 
 WORKDIR /build
 COPY webapp/package*.json .
@@ -10,7 +10,7 @@ COPY webapp/public public
 RUN npm run build
 
 # run python app
-FROM python:3.12-alpine
+FROM python:3.2-alpine
 
 ENV GUI_PORT_LISTEN 8080
 ENV PROXY_PORT_LISTEN 8081
