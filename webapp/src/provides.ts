@@ -1,7 +1,8 @@
-import { ref } from 'vue'
-import { RemoteWsClientConnectionState, RemoteWsClientItems } from '@/keys'
-import type { RequestLogUiList } from '@/types/RequestLogUi'
-import { RemoteWsConnectionStates } from '@/composables/useRemoteWs'
+import {ref} from 'vue'
+import {RemoteWsClientConnectionState, RemoteWsClientItems} from '@/keys'
+import type {RequestLogUiList} from '@/types/RequestLogUi'
+
+import {RemoteWsConnectionStates} from "@/enums/RemoteWsConnectionStates";
 
 export const RemoteWsClientItemsRef = ref<RequestLogUiList>([])
 

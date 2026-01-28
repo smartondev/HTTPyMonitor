@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { RequestLogBody } from '@/types/RequestLog'
+import type {RequestLogBody} from '@/types/RequestLog'
 import useExpand from '@/composables/useExpand'
-import { computed, defineProps } from 'vue'
+import {computed, defineProps} from 'vue'
 import DownloadOriginalContentButton from '@/components/pages/RequestLog/components/DownloadOriginalContentButton.vue'
 import CopyToClipboardButton from '@/components/pages/RequestLog/components/CopyToClipboardButton.vue'
 import PlaceholderButton from '@/components/common/PlaceholderButton.vue'
 import HttpBodyTabs from '@/components/pages/RequestLog/components/HttpBodyTabs.vue'
-import type { Optional } from '@/types/Optional'
+import type {Optional} from '@/types/Optional'
 
 type Props = {
   body?: Optional<RequestLogBody>

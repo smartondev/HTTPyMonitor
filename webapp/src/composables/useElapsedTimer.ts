@@ -1,5 +1,5 @@
-import type { Ref } from 'vue'
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import type {Ref} from 'vue'
+import {computed, onMounted, onUnmounted, ref, watch} from 'vue'
 
 export default function useElapsedTimer(
   startTimestamp: number,

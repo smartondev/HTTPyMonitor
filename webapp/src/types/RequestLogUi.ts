@@ -1,4 +1,4 @@
-import type { RequestLog } from '@/types/RequestLog'
+import type {RequestLog} from '@/types/RequestLog'
 
 export type RequestLogUiStates = {
   isSticky: boolean

@@ -1,6 +1,6 @@
-import type { NameValuePairs } from '@/types/NameValuePair'
-import type { OptionalString } from '@/types/Optional'
-import type { NullableString } from '@/types/Nullable'
+import type {NameValuePairs} from '@/types/NameValuePair'
+import type {OptionalString} from '@/types/Optional'
+import type {NullableString} from '@/types/Nullable'
 
 export type RequestLogBody = {
   length: number

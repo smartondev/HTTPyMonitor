@@ -1,6 +1,6 @@
-import { RequestLogPhase } from '@/types/RequestLog'
+import {RequestLogPhase} from '@/types/RequestLog'
 
-const useHttpPhaseToString = (phase: RequestLogPhase): string => {
+const httpPhaseToString = (phase: RequestLogPhase): string => {
   switch (phase) {
     case RequestLogPhase.END:
       return 'End'
@@ -19,4 +19,4 @@ const useHttpPhaseToString = (phase: RequestLogPhase): string => {
   }
 }
 
-export default useHttpPhaseToString
+export default httpPhaseToString

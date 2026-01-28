@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { NullableString } from '@/types/Nullable'
+import type {NullableString} from '@/types/Nullable'
 
 type Props = {
   title: string

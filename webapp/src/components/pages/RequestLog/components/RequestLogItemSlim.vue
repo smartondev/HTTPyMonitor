@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
-import useRequestLogUi from '@/composables/useRequestLog'
+import {defineProps} from 'vue'
+import useRequestLogUi from '@/utils/requestLogClassVariants'
 import RequestLogItemHeaderAction from './RequestLogItemHeaderAction.vue'
-import type { RequestLogUi } from '@/types/RequestLogUi'
+import type {RequestLogUi} from '@/types/RequestLogUi'
 import LogTime from '@/components/pages/RequestLog/components/LogTime.vue'
 import ElapsedTime from '@/components/pages/RequestLog/components/ElapsedTime.vue'
-import { RequestLogPhase } from '@/types/RequestLog'
+import {RequestLogPhase} from '@/types/RequestLog'
 
 const emits = defineEmits<{
   (event: 'drop', model: RequestLogUi): void

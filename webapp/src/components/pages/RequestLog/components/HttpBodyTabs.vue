@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { isNotUndefined } from '@/helpers/ConditionHelper'
-import { computed, ref } from 'vue'
-import { getDownloadUrlPrefix } from '@/helpers/EnvironmentHelper'
-import type { RequestLogBody } from '@/types/RequestLog'
+import {isNotUndefined} from '@/utils/ConditionHelper'
+import {computed, ref} from 'vue'
+import {getDownloadUrlPrefix} from '@/utils/EnvironmentHelper'
+import type {RequestLogBody} from '@/types/RequestLog'
 import PlaceholderParagraph from '@/components/common/PlaceholderParagraph.vue'
-import type { Optional } from '@/types/Optional'
+import type {Optional} from '@/types/Optional'
 
 type Props = {
   body: Optional<RequestLogBody>

@@ -1,15 +1,10 @@
-import type { RequestLog } from '@/types/RequestLog'
-import { RequestLogPhase } from '@/types/RequestLog'
-import type { RequestLogUi } from '@/types/RequestLogUi'
-import { RemoteWsClientConnectionStatedRef, RemoteWsClientItemsRef } from '@/provides'
-import { deepMerge } from '@/helpers/ObjectHelper'
-import { findLastIndexOf } from '@/helpers/ArrayHelper'
-
-export enum RemoteWsConnectionStates {
-  DISCONNECTED = 'DISCONNECTED',
-  CONNECTING = 'CONNECTING',
-  CONNECTED = 'CONNECTED'
-}
+import type {RequestLog} from '@/types/RequestLog'
+import {RequestLogPhase} from '@/types/RequestLog'
+import type {RequestLogUi} from '@/types/RequestLogUi'
+import {RemoteWsClientConnectionStatedRef, RemoteWsClientItemsRef} from '@/provides'
+import {deepMerge} from '@/utils/ObjectHelper'
+import {findLastIndexOf} from '@/utils/ArrayHelper'
+import {RemoteWsConnectionStates} from "@/enums/RemoteWsConnectionStates";
 
 enum RemoteDataEndpoints {
   REQUEST_LOG = 'requestLog',
@@ -23,7 +18,7 @@ type RemoteData = {
 
 type OnReceiveFunction = (event: RemoteData) => void
 
-export class RemoteWsClient {
+class RemoteWsClient {
   private readonly url: string
 
   private ws: WebSocket | null = null
@@ -121,7 +116,7 @@ export class RemoteWsClient {
   }
 }
 
-export function useWsClient(url: string): RemoteWsClient {
+export function wsClient(url: string): RemoteWsClient {
   const client = new RemoteWsClient(url)
   const processRequestLog = function (model: RequestLog) {
     const index = RemoteWsClientItemsRef.value.findIndex((item) => item.id === model.id)

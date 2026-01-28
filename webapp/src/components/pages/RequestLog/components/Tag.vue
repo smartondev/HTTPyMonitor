@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { isNotNullNorUndefined } from '@/helpers/ConditionHelper'
-import type { OptionalString } from '@/types/Optional'
-import type { MaybeString } from '@/types/Maybe'
+import {isNotNullNorUndefined} from '@/utils/ConditionHelper'
+import type {OptionalString} from '@/types/Optional'
+import type {MaybeString} from '@/types/Maybe'
 
 type Props = {
   property?: OptionalString

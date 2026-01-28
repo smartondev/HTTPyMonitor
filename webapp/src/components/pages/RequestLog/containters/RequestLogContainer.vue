@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import type { RequestLogUiList } from '@/types/RequestLogUi'
+import {computed} from 'vue'
+import type {RequestLogUiList} from '@/types/RequestLogUi'
 import LogPlace from './LogPlace.vue'
-import type { RequestLog } from '@/types/RequestLog'
+import type {RequestLog} from '@/types/RequestLog'
 
 const models = defineModel<RequestLogUiList>({
   default: []

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import useExpand from '@/composables/useExpand'
-import { computed, defineProps, onMounted, ref } from 'vue'
-import type { NameValuePairs } from '@/types/NameValuePair'
+import {computed, defineProps, onMounted, ref} from 'vue'
+import type {NameValuePairs} from '@/types/NameValuePair'
 
-import { randomInt } from '@/helpers/RandomHelper'
-import type { Optional } from '@/types/Optional'
+import {randomInt} from '@/utils/RandomHelper'
+import type {Optional} from '@/types/Optional'
 
 type Props = {
   list?: Optional<NameValuePairs>

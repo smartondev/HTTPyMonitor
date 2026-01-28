@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Tag from '@/components/pages/RequestLog/components/Tag.vue'
-import useToBytesFormatter from '@/composables/useToBytesFormatter'
-import type { OptionalNumber } from '@/types/Optional'
+import bytesFormatter from '@/formatters/bytesFormatter'
+import type {OptionalNumber} from '@/types/Optional'
 
 type Props = {
   length: OptionalNumber
@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <Tag v-if="props.length > 0" :property="property" :value="useToBytesFormatter(props.length)" />
+  <Tag v-if="props.length > 0" :property="property" :value="bytesFormatter(props.length)" />
 </template>
 
 <style scoped></style>

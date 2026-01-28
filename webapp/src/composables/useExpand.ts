@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import {ref} from 'vue'
 
 export default function useExpand(expandedDefault: boolean = false) {
   const expandedRef = ref<boolean>(expandedDefault)

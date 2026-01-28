@@ -1,10 +1,3 @@
-export const isDevEnvironment = (): boolean => {
-  return import.meta.env.VITE_APP_ENVIRONMENT === 'development'
-}
-
-export const isProdEnvironment = (): boolean => {
-  return import.meta.env.VITE_APP_ENVIRONMENT === 'production'
-}
 
 export const getDownloadUrlPrefix = (): string => {
   return import.meta.env.VITE_APP_DOWNLOAD_URL_PREFIX
