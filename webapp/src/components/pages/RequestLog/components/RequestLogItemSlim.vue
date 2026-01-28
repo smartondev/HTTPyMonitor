@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import {defineProps} from 'vue'
 import useRequestLogUi from '@/utils/requestLogClassVariants'
 import RequestLogItemHeaderAction from './RequestLogItemHeaderAction.vue'
 import type {RequestLogUi} from '@/types/RequestLogUi'

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import useExpand from '@/composables/useExpand'
-import {computed, defineProps, onMounted, ref} from 'vue'
+import {computed, onMounted, ref} from 'vue'
 import type {NameValuePairs} from '@/types/NameValuePair'
 
 import {randomInt} from '@/utils/RandomHelper'

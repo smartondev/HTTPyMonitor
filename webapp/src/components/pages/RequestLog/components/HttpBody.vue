@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type {RequestLogBody} from '@/types/RequestLog'
 import useExpand from '@/composables/useExpand'
-import {computed, defineProps} from 'vue'
+import {computed} from 'vue'
 import DownloadOriginalContentButton from '@/components/pages/RequestLog/components/DownloadOriginalContentButton.vue'
 import CopyToClipboardButton from '@/components/pages/RequestLog/components/CopyToClipboardButton.vue'
 import PlaceholderButton from '@/components/common/PlaceholderButton.vue'

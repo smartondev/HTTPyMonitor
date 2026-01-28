@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import NameValueListContainer from '@/components/pages/RequestLog/containters/NameValueListContainer.vue'
 import useRequestLogUi from '@/utils/requestLogClassVariants'
-import {computed, defineProps} from 'vue'
+import {computed} from 'vue'
 import type {RequestLogUi} from '@/types/RequestLogUi'
 import RequestLogItemSlim from './RequestLogItemSlim.vue'
 import HttpBody from '@/components/pages/RequestLog/components/HttpBody.vue'
